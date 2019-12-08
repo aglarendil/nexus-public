@@ -170,7 +170,7 @@ public class AptHostedFacet
       }
 
       releaseFile = buildReleaseFile(aptFacet.getDistribution(), store.getFiles().keySet(), md5Builder.toString(),
-          sha256Builder.toString());
+          sha256Builder.toString(), aptFacet.getOrigin(), aptFacet.getLabel());
     }
 
     aptFacet.put(releaseIndexName(RELEASE), new BytesPayload(releaseFile.getBytes(Charsets.UTF_8), AptMimeTypes.TEXT));
@@ -180,13 +180,23 @@ public class AptHostedFacet
     aptFacet.put(releaseIndexName(RELEASE_GPG), new BytesPayload(releaseGpg, AptMimeTypes.SIGNATURE));
   }
 
-  private String buildReleaseFile(final String distribution, final Collection<String> architectures, final String md5, final String sha256) {
-    Paragraph p = new Paragraph(Arrays.asList(
-        new ControlFile.ControlField("Suite", distribution),
-        new ControlFile.ControlField("Codename", distribution), new ControlFile.ControlField("Components", "main"),
-        new ControlFile.ControlField("Date", DateUtils.formatDate(new Date())),
-        new ControlFile.ControlField("Architectures", architectures.stream().collect(Collectors.joining(" "))),
-        new ControlFile.ControlField("SHA256", sha256), new ControlFile.ControlField("MD5Sum", md5)));
+  private String buildReleaseFile(final String distribution, final Collection<String> architectures, final String md5, final String sha256, final String origin, final String label) {
+    List<ControlFile.ControlField> releaseFilePropsList = Arrays.asList(
+            new ControlFile.ControlField("Suite", distribution),
+            new ControlFile.ControlField("Codename", distribution), new ControlFile.ControlField("Components", "main"),
+            new ControlFile.ControlField("Date", DateUtils.formatDate(new Date())),
+            new ControlFile.ControlField("Architectures", architectures.stream().collect(Collectors.joining(" "))),
+            new ControlFile.ControlField("SHA256", sha256), new ControlFile.ControlField("MD5Sum", md5));
+    if (label != null)
+    {
+      releaseFilePropsList.add(new ControlFile.ControlField("Label", label));
+    }
+    if (origin != null)
+    {
+      releaseFilePropsList.add(new ControlFile.ControlField("Origin", origin));
+    }
+
+    Paragraph p = new Paragraph(releaseFilePropsList);
     return p.toString();
   }
 

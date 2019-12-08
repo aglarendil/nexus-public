@@ -39,6 +39,20 @@ Ext.define('NX.coreui.view.repository.facet.AptHostedFacet', {
             fieldLabel: NX.I18n.get('Repository_Facet_AptFacet_Distribution_FieldLabel'),
             helpText: NX.I18n.get('Repository_Facet_AptFacet_Distribution_HelpText'),
             allowBlank: false
+          },
+          {
+            xtype:'textfield',
+            name: 'attributes.apt.origin',
+            fieldLabel: NX.I18n.get('Repository_Facet_AptFacet_Origin_FieldLabel'),
+            helpText: NX.I18n.get('Repository_Facet_AptFacet_Origin_HelpText'),
+            allowBlank: true
+          },
+          {
+            xtype:'textfield',
+            name: 'attributes.apt.label',
+            fieldLabel: NX.I18n.get('Repository_Facet_AptFacet_Label_FieldLabel'),
+            helpText: NX.I18n.get('Repository_Facet_AptFacet_Label_HelpText'),
+            allowBlank: true
           }
         ]
       }
