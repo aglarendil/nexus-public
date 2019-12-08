@@ -19,7 +19,6 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 
-import com.sun.istack.internal.Nullable;
 import org.sonatype.nexus.common.collect.AttributesMap;
 import org.sonatype.nexus.repository.FacetSupport;
 import org.sonatype.nexus.repository.apt.AptFacet;
@@ -67,10 +66,8 @@ public class AptFacetImpl
         @NotNull(groups = {HostedType.ValidationGroup.class, ProxyType.ValidationGroup.class})
         public String distribution;
 
-        @Nullable(groups = {HostedType.ValidationGroup.class})
         public String origin;
 
-        @Nullable(groups = {HostedType.ValidationGroup.class})
         public String label;
 
         @NotNull(groups = {ProxyType.ValidationGroup.class})
