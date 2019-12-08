@@ -15,6 +15,7 @@ package org.sonatype.nexus.repository.apt.internal.hosted;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -181,12 +182,12 @@ public class AptHostedFacet
   }
 
   private String buildReleaseFile(final String distribution, final Collection<String> architectures, final String md5, final String sha256, final String origin, final String label) {
-    List<ControlFile.ControlField> releaseFilePropsList = Arrays.asList(
+    List<ControlFile.ControlField> releaseFilePropsList = new ArrayList<ControlFile.ControlField> (Arrays.asList(
             new ControlFile.ControlField("Suite", distribution),
             new ControlFile.ControlField("Codename", distribution), new ControlFile.ControlField("Components", "main"),
             new ControlFile.ControlField("Date", DateUtils.formatDate(new Date())),
             new ControlFile.ControlField("Architectures", architectures.stream().collect(Collectors.joining(" "))),
-            new ControlFile.ControlField("SHA256", sha256), new ControlFile.ControlField("MD5Sum", md5));
+            new ControlFile.ControlField("SHA256", sha256), new ControlFile.ControlField("MD5Sum", md5)));
     if (label != null)
     {
       releaseFilePropsList.add(new ControlFile.ControlField("Label", label));
